@@ -1,2 +1,2 @@
-# logica_python
-curso tec em desenvolvimento de sistema, Senai
+# Logica_Python
+Disciplina do curso Tec. em desenvolvimento de sistema do SENAI

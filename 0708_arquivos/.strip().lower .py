@@ -1,0 +1,1 @@
+# ".strip().lower " serve para quebrar os espaços das linhas
