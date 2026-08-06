@@ -21,6 +21,6 @@ label_altura = tk.Label(root,text="Altura (cm):", width=10,height=5).grid(row=3,
 
 label_peso = tk.Label(root,text="Peso (kg):", width=8,height=5).grid(row=4, column=1, rowspan=1, sticky="ns", padx=5, pady=5)
 
-cbox_1 = 
+
 
 root.mainloop()
