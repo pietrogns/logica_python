@@ -16,6 +16,7 @@ combobox.bind("<<ComboboxSelected>>", selecao_mudou)
 #bind() = Associa o evento <<ComboboxSelected>> a uma função de callback. Disparado quando se seleciona um item.
 combobox.pack()
 
+
 label = tk.Label(root, text="Primeiro selecionado!")
 label.pack()
 
