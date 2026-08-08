@@ -2,7 +2,8 @@ import tkinter as tk
 from tkinter import ttk
 
 def conversao_button():
-    conv = entrada_valor.get()
+    valor = entrada_valor.get()
+    conversao = valor * 5.5
     
 
 janela = tk.Tk()
