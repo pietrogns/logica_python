@@ -17,7 +17,5 @@ entry.pack()
 label = tk.Label(root, text="Demonstração!")
 label.pack()
 
-# Nome
-entrada_nome = tk.Entry(root, width=25)
-entrada_nome.grid(row=0, column=2, padx=5, pady=5)
+
 root.mainloop()
