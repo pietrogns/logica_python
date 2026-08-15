@@ -66,6 +66,16 @@ app_pc_pontos.place(x=180, y=20)
 empate = Label(frame_cima, text="",width=260, anchor="center",bg=cor3, fg=cor0)
 empate.place(x=0, y=95)
 
+#mostra a jogada do pc
+app_jogada_pc = Label(frame_baixo, text="", height=1, anchor="center",
+                      bg=cor0, fg=cor1, font=("Ivy 10 bold"))
+app_jogada_pc.place(x=190, y=10)
+
+#mostra a jogada do jogador
+app_jogada_pessoa = Label(frame_baixo, text="", height=1, anchor="center",
+                          bg=cor0, fg=cor1, font=("Ivy 10 bold"))
+app_jogada_pessoa.place(x=10, y=10)
+
 global escolha_pessoa
 global escolha_pc
 global pontos_pessoa
@@ -75,6 +85,10 @@ pontos_pessoa = 0
 pontos_pc = 0
 rodadas = 5
 
+    #setando a cor da marcação de ponto para ficarem invisiveis
+app_pessoa_linha["bg"] = cor0
+app_pc_linha["bg"] = cor0
+empate["bg"] = cor0
 #função terminar jogo
 def terminar_jogo():
     pass
@@ -86,18 +100,32 @@ def jogar(jogada):
     global rodadas
     opcoes = ["pedra", "papel", "tesoura"]
 
-    #setando a cor da marcação de ponto para ficarem invisiveis
-    app_pessoa_linha["bg"] = cor0
-    app_pc_linha["bg"] = cor0
-    empate["bg"] = cor0
+
 
     if rodadas > 0:
         print(rodadas)
         #random serve para randomizar as opções do PC
         escolha_pc = random.choice(opcoes)
-        escolha_pessoa = jogada
-        print(escolha_pessoa, escolha_pc)
+        app_jogada_pc["text"] = escolha_pc
 
+        escolha_pessoa = jogada
+        app_jogada_pessoa["text"] = escolha_pessoa
+        print(escolha_pessoa, escolha_pc)
+        rodadas -= 1
+
+    # caso empate
+        
+    if escolha_pessoa == escolha_pc:
+        empate["bg"] = cor3
+
+    # elif testa_vitoria_pessoa(escolha_pessoa, escolha_pc):
+    #     pontos_pessoa += 10
+    #     app_pessoa_linha["bg"] = cor4
+    # elif testa_vitoria_pc(escolha_pessoa, escolha_pc):
+    #     pontos_pc += 10
+    #     app_pc_linha["bg"] = cor4
+
+    #  mostrar_pontos(ponto_pessoa, pontos_pc)
     else:
         terminar_jogo()
 
