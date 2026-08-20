@@ -21,8 +21,6 @@ janela.geometry("260x285")
 janela.configure(bg=fundo)
 
 
-
-
 frame_cima = Frame(janela, width=260, height=100, bg=cor1, relief="raised")
 frame_cima.grid(row=0, column=0, sticky=NW)
 frame_baixo = Frame(janela, width=260, height=300, bg=cor0, relief="flat")
@@ -85,13 +83,70 @@ pontos_pessoa = 0
 pontos_pc = 0
 rodadas = 5
 
-    #setando a cor da marcação de ponto para ficarem invisiveis
+#setando a cor da marcação de ponto para ficarem invisiveis
 app_pessoa_linha["bg"] = cor0
 app_pc_linha["bg"] = cor0
 empate["bg"] = cor0
+    
+
+#regras do jogo
+regras = {"pedra": "tesoura",
+        "papel": "pedra",
+        "tesoura":"papel"}
+
+def testa_vitoria_pessoa(pessoa, pc):
+    return regras[pessoa] == pc
+
+def testa_vitoria_pc(pessoa,pc):
+    return regras[pc] == pessoa
+
+#função mostrar pontos
+def mostrar_pontos():
+    app_pessoa_pontos["text"] = str(pontos_pessoa)
+    app_pc_pontos["text"] = str(pontos_pc)
+
+#função para reiniciar jogo
+def botao_reset():
+
+    global pontos_pessoa
+    global pontos_pc
+    global rodadas
+
+    pontos_pessoa = 0
+    pontos_pc = 0
+    rodadas = 5
+
+    app_pessoa_pontos["text"] = "0"
+    app_pc_pontos["text"] = "0"
+
+    btn_jogar.config(state="active")
+
 #função terminar jogo
 def terminar_jogo():
-    pass
+    global resultado
+    global resultado_pc
+
+    btn_papel.config(state="disabled")
+    btn_pedra.config(state="disabled")
+    btn_tesoura.config(state="disabled")
+    btn_jogar.config(state="disabled")
+
+    if pontos_pessoa > pontos_pc:
+        resultado = Label(frame_baixo, text="Você ganhou!!", height=1,width=10, anchor="center",
+                          bg=cor2, fg=cor1, font=("Ivy 10 bold"))
+        resultado.place(x=90, y=10)
+    else:
+        resultado_pc = Label(frame_baixo, text="Pc ganhou!!", height=1,width=10, anchor="center",
+                          bg=cor2, fg=cor1, font=("Ivy 10 bold"))
+        resultado_pc.place(x=90, y=10)
+
+    #botão reiniciar
+    btn_reset = Button(frame_baixo, command=botao_reset, text="Reiniciar jogo", width=29, anchor="center",fg=cor0, bg=fundo, font=("Ivy 10 bold"))
+    btn_reset.place(x=9, y=120)
+    
+    
+    
+    #"state=" serve para definir o estado
 
 #função logica do jogo
 def jogar(jogada):
@@ -100,7 +155,7 @@ def jogar(jogada):
     global rodadas
     opcoes = ["pedra", "papel", "tesoura"]
 
-
+    
 
     if rodadas > 0:
         print(rodadas)
@@ -114,19 +169,22 @@ def jogar(jogada):
         rodadas -= 1
 
     # caso empate
-        
     if escolha_pessoa == escolha_pc:
         empate["bg"] = cor3
 
-    # elif testa_vitoria_pessoa(escolha_pessoa, escolha_pc):
-    #     pontos_pessoa += 10
-    #     app_pessoa_linha["bg"] = cor4
-    # elif testa_vitoria_pc(escolha_pessoa, escolha_pc):
-    #     pontos_pc += 10
-    #     app_pc_linha["bg"] = cor4
+    elif testa_vitoria_pessoa(escolha_pessoa, escolha_pc):
+        pontos_pessoa += 1
+        app_pessoa_linha["bg"] = cor4
+        empate["bg"] 
+    elif testa_vitoria_pc(escolha_pessoa, escolha_pc):
+        pontos_pc += 1
+        app_pc_linha["bg"] = cor4
 
-    #  mostrar_pontos(ponto_pessoa, pontos_pc)
-    else:
+
+
+    mostrar_pontos()
+
+    if rodadas == 0:
         terminar_jogo()
 
 #função iniciar o jogo
