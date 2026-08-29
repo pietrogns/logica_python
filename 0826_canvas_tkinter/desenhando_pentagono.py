@@ -5,10 +5,11 @@ janela.geometry("500x400")
 
 canvas = Canvas(janela, width=400, height=300, bg="gray")
 
-canvas.create_polygon(110,100,
-                      60,100
-                      ,100,60,
-                      150,110,
+canvas.create_polygon(70,10,
+                      127,50,
+                      103, 122,
+                      27 , 122,
+                      13, 50,
                       fill="cyan")
 
 #sintaxe
