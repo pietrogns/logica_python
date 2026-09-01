@@ -63,22 +63,36 @@ canvas.create_oval(202,220, 210, 215,fill="black")
 #Grama
 canvas.create_rectangle(800,600, 1, 250,fill="green")
 
-#CARRO
+# Carro (Traseira e teto)
+canvas.create_polygon(430, 150, 495, 150, 515, 170, 515, 190, 430, 190, fill="red", outline="black")
 
-#linha para baixo dir
-canvas.create_rectangle(602, 215, 560, 170,fill="brown",width=3)
-#linha para baixo esq
-canvas.create_rectangle(560, 215, 560, 170,fill="brown",width=3)
-#linha reta de baixo
-canvas.create_line(559, 215, 602, 215,fill="brown",width=3)
-#linha reta de cima
-canvas.create_line(559, 170, 602, 170,fill="brown",width=3)
-#linha do meio para baixo
-canvas.create_line(275, 210, 275, 180,fill="gray",width=3)
-#linha reta do meio
-canvas.create_line(259, 195, 292, 195,fill="gray",width=3)
+# Frente carro
+canvas.create_polygon(430, 165, 430, 190, 410, 190, 410, 175, fill="red", outline="black")
 
+# Porta carro
+canvas.create_rectangle(435, 168, 468, 188, fill="red", outline="black")
 
+# Maçaneta porta 
+canvas.create_oval(460, 174, 466, 177, fill="silver", outline="black")
 
+# Vidro dianteiro
+canvas.create_polygon(417, 168, 431, 155, 431, 168, fill="cyan", outline="black")
+
+# Janela da Porta
+canvas.create_rectangle(435, 155, 468, 168, fill="cyan", outline="black")
+
+# Janela Traseira
+canvas.create_polygon(472, 155, 495, 155, 505, 168, 472, 168, fill="cyan", outline="black")
+
+# Roda Esquerda
+canvas.create_oval(423, 182, 443, 202, fill="black", outline="")
+canvas.create_oval(431, 190, 435, 194, fill="white", outline="")
+
+# Roda Direita
+canvas.create_oval(487, 182, 507, 202, fill="black", outline="")
+canvas.create_oval(495, 190, 499, 194, fill="white", outline="")
+
+# Farol dianteiro
+canvas.create_rectangle(410, 176, 413, 182, fill="yellow", outline="")
 canvas.pack()
 janela.mainloop()
