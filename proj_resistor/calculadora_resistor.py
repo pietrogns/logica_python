@@ -1,9 +1,10 @@
-from tkinter import Tk, Canvas
-from tkinter import ttk
 import tkinter as tk
+from tkinter import ttk
+from tkinter import Tk, Canvas
 
 janela = Tk()
 janela.geometry("500x400")
+janela.config()
 janela.title("Calculadora de resistor")
 
 CORES = {
@@ -26,8 +27,17 @@ TOLERANCIA = {
     "Ouro": ("#D4AF37","±5%"),
     "Prata": ("#C0C0C0","±10%")}
 
-NOMES_CORES = list(CORES.keys())
+# cores que servem para as duas primeiras faixas (têm dígito 0-9)
+NOMES_DIGITO = [nome for nome, info in CORES.items() if info["digito"] is not None]
+# cores que servem para a faixa do multiplicador
+NOMES_MULTI = [nome for nome, info in CORES.items() if info["multi"] is not None]
 NOMES_TOLERANCIA = list(TOLERANCIA.keys())
+ 
+# mapas inversos, usados no modo "por valor"
+DIGITO_PARA_COR = {info["digito"]: nome for nome, info in CORES.items() if info["digito"] is not None}
+MULTI_PARA_COR = {info["multi"]: nome for nome, info in CORES.items() if info["multi"] is not None}
+
+UNIDADES = {"Ω": 1, "kΩ": 1_000, "MΩ":1_000_000}
 
 def formatacao_valor(ohms):
     if ohms >= 1_000_000:
@@ -37,11 +47,32 @@ def formatacao_valor(ohms):
     else:
         return f"{ohms:.2f} Ω"
 
-#título do tkinter
-label_1 = tk.Label(janela, text="Calculadora de resistor", anchor= "n")
-label_1.pack()
-janela.mainloop()
+def modo_cores():
+    print(f"opcao slecionada: {var_opcao.get()}")
 
-#canvas onde o resistor vai ser desenhado
-canvas = tk.Canvas(janela, width=350, height=200, bg="gray")
-canvas.pack(pady=20)
+
+# --- Interface ---
+ 
+label_1 = tk.Label(janela, text="Calculadora de resistor", font=("Arial", 14, "bold"))
+label_1.pack(anchor="w",pady=10)
+
+#variavel para armazenar a opção selecionada
+var_opcao = tk.StringVar(value="1")
+
+frame_radios = tk.Frame(janela)
+frame_radios.pack(anchor="w", padx=10, pady=5)
+
+#columnspan=2 faz o texto ocupar o espaço de 2 colunas
+escolha_modos = tk.Label(frame_radios, text="Como deseja informar o resistor?", font=("Arial", 10, "bold"))
+escolha_modos.grid(row=0, column=0, columnspan=2, sticky="w", pady=(0, 5))
+
+rb1 = tk.Radiobutton(frame_radios, text="Cores", variable=var_opcao, value="1")
+rb1.grid(row=1, column=0, sticky="w", padx=(0, 15))
+
+rb2 = tk.Radiobutton(frame_radios, text="Valor", variable=var_opcao, value="2")
+rb2.grid(row=1, column=1, sticky="w") # row 0, coluna 1
+#       ^^^^^^^  ^^^^^^^^
+#     mesma linha, coluna diferente = LADO A LADO
+
+
+janela.mainloop()
