@@ -7,27 +7,30 @@ janela.geometry("500x400")
 janela.title("Calculadora de resistor")
 
 CORES = {
-    "Preto":    {"digito":0, "multi": 1, "cor":"#000000"},
+    "Preto":    {"digito":0, "multi": 1,"cor":"#000000"},
     "Marrom":   {"digito":1, "multi":10, "cor":"#A52A2A"},
     "Vermelho": {"digito":2, "multi":100, "cor":"#FF0000"},
     "Laranja":  {"digito":3, "multi":1000, "cor":"#FF8C00"},
     "Amarelo":  {"digito":4, "multi":10000, "cor":"#FFA500"},
     "Verde":    {"digito":5, "multi":100000, "cor":"#008000"},    
-    "Azul":     {"digito":6, "multi":1000000, "cor":"#0000FF" },
+    "Azul":     {"digito":6, "multi":1000000, "cor":"#0000FF"},
     "Violeta":  {"digito":7, "multi":10000000, "cor":"#8A2BE2"},
     "Cinza":    {"digito":8, "multi":None, "cor":"#808080"},
     "Branco":   {"digito":9, "multi":None, "cor":"#FFFFFF"},
-    "Ouro":     {"digito":None,"multi":0.1,"cor":"#D4AF37" },
+    "Ouro":     {"digito":None,"multi":0.1,"cor":"#D4AF37"},
     "Prata":    {"digito":None,"multi":0.01,"cor":"#C0C0C0"}
 }
 TOLERANCIA = {
-    "Marrom": ("#A52A2A", "±1%"),
+    "Marrom":  ("#A52A2A", "±1%"),
     "Vermelho":("#FF0000","±2%"),
-    "Ouro": ("#D4AF37","±5%"),
-    "Prata": ("#C0C0C0","±10%")}
+    "Ouro":    ("#D4AF37","±5%"),
+    "Prata":   ("#C0C0C0","±10%")}
 
 NOMES_CORES = list(CORES.keys())
 NOMES_TOLERANCIA = list(TOLERANCIA.keys())
+VALORES_MULTI = janela.valores_digitos + ["Dourado", "Prateado"]
+
+modo_var = tk.StringVar(value=1)
 
 def formatacao_valor(ohms):
     if ohms >= 1_000_000:
@@ -37,11 +40,27 @@ def formatacao_valor(ohms):
     else:
         return f"{ohms:.2f} Ω"
 
-#título do tkinter
-label_1 = tk.Label(janela, text="Calculadora de resistor", anchor= "n")
-label_1.pack()
-janela.mainloop()
+#interface
 
-#canvas onde o resistor vai ser desenhado
-canvas = tk.Canvas(janela, width=350, height=200, bg="gray")
-canvas.pack(pady=20)
+label_titulo = tk.Label(janela, text="Calculadora de resistor", anchor= "n", font=("Arial", 16, "bold"))
+label_titulo.pack()
+
+#opções de modos
+frame_modo = tk.Frame(janela)
+frame_modo.pack(fill="x", pady=5)
+
+tk.Radiobutton(frame_modo, text="Cores do resistor", variable=modo_var, value="cores", bg="light gray").pack(side="left", padx=5)
+tk.Radiobutton(frame_modo, text="Valor do resistor", variable=modo_var, value="valor", bg="light gray").pack(side="left", padx=5)
+
+#comboboxes para seleção de cores
+frame_cor_valor = tk.LabelFrame(janela, text=" Selecione as Cores (4 Faixas) ", padx=10, pady=10)
+
+faixa1_combo = ttk.Combobox(janela, values=NOMES_CORES, state="readonly", width=13)
+faixa1_combo.set(None)
+faixa2_combo = ttk.Combobox(janela, values=NOMES_CORES, state="readonly", width=13)
+faixa2_combo.set(None)
+faixa3_combo = ttk.Combobox(janela, values=NOMES_TOLERANCIA, state="readonly", width=13)
+faixa3_combo.set(None)
+
+
+janela.mainloop()
