@@ -4,7 +4,7 @@ from tkinter import Tk, Canvas
 from tkinter import messagebox
 janela = Tk()
 janela.geometry("500x400")
-janela.config(background="light gray")
+janela.config(bg="aliceblue")
 janela.title("Calculadora de resistor")
 
 estilo = ttk.Style()
@@ -71,62 +71,88 @@ def botao_calcular():
         "Informação",
         "Você clicou no botão!"
     )
-#  Interface 
-label_titulo = tk.Label(janela, text="Calculadora de resistor", anchor= "n", bg="light gray", font=("Arial", 16, "bold"))
-label_titulo.pack()
+#  Título Principal
+label_titulo = tk.Label(janela, text="Calculadora de Resistor", anchor="n", bg="aliceblue", fg="#1a3b5c", font=("Arial", 16, "bold"))
+label_titulo.pack(anchor= "w", padx=20, pady=15)
 
-# opções de modos
-frame_modo = tk.Frame(janela, bg="light gray")
+#   Frame Branco fundo
+frame_principal = tk.Frame(janela, bg="white", padx=20, pady=20)
+frame_principal.pack(fill="both", expand=True, padx=20, pady=(0, 20))
+
+#   Texto guia?
+tk.Label(frame_principal, text="Como deseja informar o resistor?", bg="white", font=("Arial", 10,"bold")).pack(anchor="w")
+
+#   Opções de modos
+frame_modo = tk.Frame(frame_principal, bg="white")
 frame_modo.pack(fill="x", pady=5)
 modo_var = tk.StringVar(value="cores") 
 
-#botões das opções
-cores_rdbtn = tk.Radiobutton(frame_modo, text="Cores do resistor", variable=modo_var, value="cores", bg="Gainsboro", font=("Arial", 9),command=modo_cores).pack(side="left", padx=5)
-valor_rdbtn = tk.Radiobutton(frame_modo, text="Valor do resistor", variable=modo_var, value="valor", bg="Gainsboro", font=("Arial", 9),command=modo_cores).pack(side="left", padx=5)
+#   Botões das opções
+cores_rdbtn = tk.Radiobutton(frame_modo, text="Cores do resistor", variable=modo_var, value="cores", bg="#e8e8e8", font=("Arial", 9),command=modo_cores).pack(side="left", padx=(0,10))
+valor_rdbtn = tk.Radiobutton(frame_modo, text="Valor da resistência", variable=modo_var, value="valor", bg="#e8e8e8", font=("Arial", 9),command=modo_cores).pack(side="left", padx=5)
 
-#--------- Comboboxes para seleção de cores ---------
-frame_cor_valor = tk.LabelFrame(janela, padx=10, pady=10)
-frame_cor_valor.pack(pady=10)
+#   Frame para seleção de cores
+frame_cor_valor = tk.Frame(frame_principal, bg="White")
 
-faixa1_txt = tk.Label(frame_cor_valor, text="Faixa 1")
-faixa1_txt.grid(row=0, column=0, padx=5)
-faixa1_combo = ttk.Combobox(frame_cor_valor, values=NOMES_DIGITO, state="readonly", width=13)
+#   Faixa 1
+faixa1_txt = tk.Label(frame_cor_valor, text="Faixa 1:", bg="white")
+faixa1_txt.grid(row=0, column=0, padx=5, sticky="w")
+faixa1_combo = ttk.Combobox(frame_cor_valor, values=NOMES_DIGITO, state="readonly", width=12)
 faixa1_combo.grid(row=1, column=0, padx=5, pady=5)
 
-faixa2_txt = tk.Label(frame_cor_valor, text="Faixa 2")
-faixa2_txt.grid(row=0, column=1, padx=5)
-faixa2_combo = ttk.Combobox(frame_cor_valor, values=NOMES_DIGITO, state="readonly", width=13)
+#   Faixa 2
+faixa2_txt = tk.Label(frame_cor_valor, text="Faixa 2:", bg="white")
+faixa2_txt.grid(row=0, column=1, padx=5, sticky="w")
+faixa2_combo = ttk.Combobox(frame_cor_valor, values=NOMES_DIGITO, state="readonly", width=12)
 faixa2_combo.grid(row=1, column=1, padx=5, pady=5)
 
-#faixa multiplicador
-faixa3_txt = tk.Label(frame_cor_valor, text="Multiplicador:")
-faixa3_txt.grid(row=0, column=2, padx=5)
-faixa3_combo = ttk.Combobox(frame_cor_valor, values=NOMES_MULTI, state="readonly", width=13)
+#   Multiplicador
+faixa3_txt = tk.Label(frame_cor_valor, text="Multiplicador:", bg="white")
+faixa3_txt.grid(row=0, column=2, padx=5, sticky="w")
+faixa3_combo = ttk.Combobox(frame_cor_valor, values=NOMES_MULTI, state="readonly", width=12)
 faixa3_combo.grid(row=1, column=2, padx=5, pady=5)
 
-#faixa tolerância
-faixa4_txt = tk.Label(frame_cor_valor, text="Tolerância:")
-faixa4_txt.grid(row=0, column=3, padx=5)
-faixa4_combo = ttk.Combobox(frame_cor_valor, values=NOMES_TOLERANCIA, state="readonly", width=13)
+#   Tolerância
+faixa4_txt = tk.Label(frame_cor_valor, text="Tolerância:", bg="white")
+faixa4_txt.grid(row=0, column=3, padx=5, sticky="w")
+faixa4_combo = ttk.Combobox(frame_cor_valor, values=NOMES_TOLERANCIA, state="readonly", width=12)
 faixa4_combo.grid(row=1, column=3, padx=5, pady=5)
 
-#--------- Valor Resistência ---------
+#       Frame Valor Resistência
 
-frame_valor_cor = tk.LabelFrame(janela,padx=10, pady=10)
+frame_valor_cor = tk.Frame(frame_principal, bg="white")
 
-#texto que mostra onde o usuario vai digitar 
-resis_valor = tk.Label(frame_valor_cor, text="Valor da Resistência (Ω)")
-resis_valor.grid(row=0, column=0, padx=5)
-entry_resis = tk.Entry(frame_valor_cor)
-entry_resis.grid(row=1, column=0, padx=5, pady=5)
+valor_lbl = tk.Label(frame_valor_cor, text="Valor da Resistência (Ω)", bg="white")
+valor_lbl.grid(row=0, column=0, padx=(0,5), sticky="w")
 
+entry_resis = tk.Entry(frame_valor_cor, width=15)
+entry_resis.grid(row=1, column=0, padx=(0, 5), pady=5)
+
+
+toler_lbl = tk.Label(frame_valor_cor, text="Tolerância:", bg="white").grid(row=0, column=1, padx=5, sticky="w")
 toler_combo = ttk.Combobox(frame_valor_cor, values=NOMES_TOLERANCIA,state="readonly", width=13)
 toler_combo.grid(row=1, column=1, padx=5, pady=5)
 
 
-#canvas onde o resistor vai ser desenhado
-resist_canvas = tk.Canvas(janela, width=400, height=200)
+#   Botão para calcular
+botton_calcular = tk.Button(
+    frame_principal,
+    text="Calcular resistência", 
+    bg="gray", 
+    fg="White", 
+    font=("Arial", 10, "bold"),
+    relief="groove",
+    padx=10,
+    pady=5,
+    command=botao_calcular
+)
+botton_calcular.pack(anchor="w", pady=15)
+
+#   Canvas onde o resistor vai ser desenhado
+sub_canvas = tk.Label(frame_principal, text="Digite o valor da resistência ou selecione as cores.", font=("Arial", 10, "bold"), bg="White").pack(anchor="w",pady=5)
+resist_canvas = tk.Canvas(janela, width=100, height=100)
 resist_canvas.pack()
 
-botton_calcular = tk.Button(janela, text="Calcular resistência", fg="light green",command=botao_calcular)
+modo_cores()
 janela.mainloop()
+
